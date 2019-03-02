@@ -7,17 +7,19 @@
 
 // Requiring our Todo model
 var db = require("../models");
+var key = require("../keys");
 
 require('dotenv').config({
   path: './process.env'
 });
+
 
 // Routes
 // =============================================================
 module.exports = function (app) {
   // GET route for API key
   app.get('/getkey', function (req, res) {
-    res.send(process.env.KEY);
+    res.send(key);
   });
 
   //USERS
