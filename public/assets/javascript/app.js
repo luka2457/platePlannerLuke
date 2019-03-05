@@ -1,46 +1,62 @@
 function apiKey() {
+
     $.get("/getkey", function (key) {
 
-        
-        var userId = 6;
+        let apiKeyIndex = 0;
+        var apiKey = key[apiKeyIndex];
+        var userId = 2;
 
         // AJAX call for ingredients using the recipe id provided in the first AJAX call
-        function ingredientsAPI(recipeId, trueOrFalse, recipeResult, num) {
+        function ingredientsAPI(recipeId, trueOrFalse, apiKey, recipeResult, num) {
+            console.log("apiKey for ingredientsAPI " + apiKey);
             $.ajax({
                 url: 'https://www.food2fork.com/api/get',
                 type: 'GET',
                 data: {
-                    key: key,
+                    key: apiKey,
                     rId: recipeId,
                 },
                 success: function (result) {
-                    var results = JSON.parse(result);
                     // retreival of recipe ingredients as array
+                    var results = JSON.parse(result);
+                    console.log("results of ingredientsAPI");
+                    console.log(results);
 
-                    //this is so it will only go to the database if we "favorite" it
-                    if (trueOrFalse) {
-                        for (var i = 0; i < results.recipe.ingredients.length; i++) {}
 
-                        // console.log(results.recipe.title);
-
-                        results.recipe.ingredients.forEach(function (element) {
-                            //this adds all ingredients to the shopping cart
-                            ingredientsToCart({
-                                Ingredients: element,
-                                RecipeTableId: recipeId,
-                            });
-                        });
-                    } 
-                    else {
-
-                        let testHTML = "";
-                        for (let i = 0; i < results.recipe.ingredients.length; i++) {
-                            testHTML += `<li>${results.recipe.ingredients[i]}</li>`;
+                    if (results.error == "limit") {
+                        apiKeyIndex++;
+                        apiKey = key[apiKeyIndex];
+                        if (apiKeyIndex >= 9) {
+                            alert("The Food 2 Fork API request limit has been reached for this application. Please try again tomorrow when the limit has reset, sorry for the inconvience.")
+                        } else {
+                            ingredientsAPI(recipeId, trueOrFalse, apiKey);
                         }
+                    } else if (apiKeyIndex >= 9) {
+                        alert("The Food 2 Fork API request limit has been reached for this application. Please try again tomorrow when the limit has reset, sorry for the inconvience.")
+                    } else {
+                        //this is so it will only go to the database if we "favorite" it
+                        if (trueOrFalse) {
 
-                        // console.log("recipe result:", recipeResult);
+                            for (var i = 0; i < results.recipe.ingredients.length; i++) { }
 
-                        $(".accordion").append(`
+                            results.recipe.ingredients.forEach(function (element) {
+                                //this adds all ingredients to the shopping cart
+                                ingredientsToCart({
+                                    Ingredients: element,
+                                    RecipeTableId: recipeId,
+                                });
+                            });
+                        }
+                        else {
+
+                            let testHTML = "";
+                            for (let i = 0; i < results.recipe.ingredients.length; i++) {
+                                testHTML += `<li>${results.recipe.ingredients[i]}</li>`;
+                            }
+
+                            // console.log("recipe result:", recipeResult);
+
+                            $(".accordion").append(`
                             <div class='card' style='background-color: oldlace;'>
                                 <div class='card-header' id=${num} style='background-color: rgba(255, 255, 255, 0.4);'> 
                                     <h5 class='mb-0'> 
@@ -65,11 +81,12 @@ function apiKey() {
                             </div>
                         `);
 
-                    
-                        $(".accordion").find("button#" + num).on("click", function () {
-                            $(".item" + num).collapse("toggle");
-                        });
-                    }  
+
+                            $(".accordion").find("button#" + num).on("click", function () {
+                                $(".item" + num).collapse("toggle");
+                            });
+                        }
+                    }
                 },
                 error: function (error) {
                     console.log(error);
@@ -77,7 +94,8 @@ function apiKey() {
             });
         }
 
-        $(document).on('click', '#search', function () {
+        $(document).on('click', '#search', function searchBtnClicked() {
+
             event.preventDefault();
 
             $(".accordion").empty();
@@ -93,21 +111,31 @@ function apiKey() {
                 url: 'https://www.food2fork.com/api/search',
                 type: 'GET',
                 data: {
-                    key: key,
+                    key: apiKey,
                     q: food,
                     count: 5
                 },
                 success: function (result) {
+                    console.log("apiKey for searchbtnclicked" + apiKey);
                     var results = JSON.parse(result);
-
-                    // console.log(results.recipes);
-
-                    results.recipes.forEach(function (element, i) {
-                        // console.log(results.recipes[i].title);
-                        ingredientsAPI(element.recipe_id, false, results.recipes[i], i);
-                    });
+                    if (results.error == "limit") {
+                        apiKeyIndex++;
+                        apiKey = key[apiKeyIndex];
+                        if (apiKeyIndex >= 9) {
+                            alert("The Food 2 Fork API request limit has been reached for this application. Please try again tomorrow when the limit has reset, sorry for the inconvience.")
+                        } else {
+                            searchBtnClicked();
+                        }
+                    } else if (apiKeyIndex >= 9) {
+                        alert("The Food 2 Fork API request limit has been reached for this application. Please try again tomorrow when the limit has reset, sorry for the inconvience.")
+                    } else {
+                        results.recipes.forEach(function (element, i) {
+                            ingredientsAPI(element.recipe_id, false, apiKey, results.recipes[i], i);
+                        });
+                    }
                 },
                 error: function (error) {
+                    alert("The Food 2 Fork API request limit has been reached for this application. Please try again tomorrow when the limit has reset, sorry for the inconvience.")
                     console.log(error);
                 }
             });
@@ -116,17 +144,19 @@ function apiKey() {
 
 
         //this is the function of when you favorite a recipe...inserts recipe to favs
-        $(document).on('click', 'button.favSave-btn', function () {
+        $(document).on('click', 'button.favSave-btn', function favSaveBtnClicked () {
             var RecipeDataName = $(this).data("title");
             var RecipeDataId = $(this).data("rid");
             var RecipeDataSource = $(this).data("source");
             var RecipeDataImage = $(this).data("img");
             insertRecipe(RecipeDataName, RecipeDataId, userId, RecipeDataSource, RecipeDataImage);
-            console.log(RecipeDataSource);
+            console.log("this is the recipe data id");
+            console.log(RecipeDataId);
 
 
             $(this).replaceWith("<p style='color: red'>Added to Favorites!</p><p style='color: red'>Ingredients added to shopping list</p>");
-            ingredientsAPI(RecipeDataId, true);
+            ingredientsAPI(RecipeDataId, true, apiKey);
+            console.log('this is apikey at onclick save btn ' + apiKey);
         });
 
 
@@ -155,12 +185,12 @@ function apiKey() {
                 UsersTableId: userId
 
             };
-            console.log("recipe sent to database");
+            console.log("recipe sent to recipeTable database");
             $.post("/api/recipes", recipesArray);
         }
 
         function ingredientsToCart(ingredientData) {
-            console.log("ingredient sent to database");
+            console.log("ingredient sent to cart database");
             $.post("/api/cart", ingredientData);
         }
 

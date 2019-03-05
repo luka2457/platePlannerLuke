@@ -1,7 +1,7 @@
 $("document").ready(function () {
     var random = ["chicken", "beef", "vegetables", "fruit"];
     var rand = random[Math.floor(Math.random() * random.length)];
-    var apiKeyIndex = 3;
+    var apiKeyIndex = 0;
 
     function getKey() {
 
@@ -75,12 +75,12 @@ $("document").ready(function () {
                     var results = JSON.parse(result);
                     if (results.error == "limit") {
                         apiKeyIndex++;
-                        if (apiKeyIndex >= 4){
+                        if (apiKeyIndex >= 9){
                             alert("The Food 2 Fork API request limit has been reached for this application. Please try again tomorrow when the limit has reset, sorry for the inconvience.")
                         } else {
                             getKey();
                         }
-                    } else if (apiKeyIndex >= 4){
+                    } else if (apiKeyIndex >= 9){
                         alert("The Food 2 Fork API request limit has been reached for this application. Please try again tomorrow when the limit has reset, sorry for the inconvience.")
                     } else {
                         results.recipes.forEach(function (element, i) {

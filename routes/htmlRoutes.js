@@ -36,7 +36,11 @@ module.exports = function (app) {
 
 //this function allows handlebars to display the database variables
 function renderProfileList(req, res) {
-  db.RecipeTable.findAll({}).then(function (profileInfoToHTML) {
+  db.RecipeTable.findAll({
+    where: {
+      UsersTableId: 1
+    }
+  }).then(function (profileInfoToHTML) {
     res.render("profile", { RecipeTable: profileInfoToHTML });
   })
 };
@@ -44,7 +48,6 @@ function renderProfileList(req, res) {
 //this function allows handlebars to display the database variables
 function renderShoppingList(req, res) {
   db.CartTable.findAll({}).then(function (cartInfoToHTML) {
-    console.log("============= ", cartInfoToHTML);
     res.render("shoppinglist", { CartTable: cartInfoToHTML });
   })
 };

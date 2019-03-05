@@ -53,7 +53,7 @@ module.exports = function (app) {
   app.get("/api/recipes", function (req, res) {
     db.RecipeTable.findAll({
       where: {
-        'UsersTableId': 6
+        UsersTableId: 1
       },
       include: [{
         model: db.UsersTable,
@@ -103,7 +103,7 @@ module.exports = function (app) {
   app.get("/api/cart", function (req, res) {
     db.CartTable.findAll({
       where: {
-        'UsersTableId': 7
+        UsersTableId: 1
       },
       include: [{
         model: db.UsersTable,
