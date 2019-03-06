@@ -28,10 +28,13 @@
     "express-handlebars": "^3.0.0",
     "mysql2": "^1.6.1",
     "npm": "^6.4.1",
+    "passport": "^0.4.0",
+    "passport-facebook": "^3.0.0",
     "path": "^0.12.7",
     "require": "^2.4.20",
     "sequelize": "^4.41.0",
-    "sequelize-cli": "^5.2.0"
+    "sequelize-cli": "^5.2.0",
+    "yarn": "^1.13.0"
   },
   "devDependencies": {}
 }
