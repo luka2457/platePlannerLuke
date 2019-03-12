@@ -4,6 +4,12 @@ module.exports = function (sequelize, DataTypes) {
   });
 
   CartTable.associate = function (models) {
+    CartTable.belongsTo(models.UsersTable, {
+      foreignKey: {
+        allowNull: false,
+      },
+      constraints: false
+    });
     CartTable.belongsTo(models.RecipeTable, {
       foreignKey: {
         allowNull: false,

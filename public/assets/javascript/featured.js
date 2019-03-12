@@ -1,13 +1,13 @@
 $("document").ready(function () {
-    var random = ["chicken", "beef", "vegetables", "fruit"];
+    var random = ["chicken", "beef", "vegetables", "fruit", "soup", "candy", "pasta", "pie", "cake"];
     var rand = random[Math.floor(Math.random() * random.length)];
     var apiKeyIndex = 0;
 
     function getKey() {
 
-        $.get("/getkey", function (key) {
+        $.get("/getkey", function (sentVariable) {
 
-            var apiKey = key[apiKeyIndex];
+            var apiKey = sentVariable.key[apiKeyIndex];
 
             // AJAX call for ingredients using the recipe id provided in the first AJAX call
             function ingredientsAPI(recipeId, trueOrFalse, recipeResult, num) {

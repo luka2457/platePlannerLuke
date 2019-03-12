@@ -13,34 +13,17 @@ passport.use(
     {
       clientID: '2812611205629771',
       clientSecret: 'debd2a021c974b66ca2c5736dd15e77d',
-      callbackURL: "https://efd8e699.ngrok.io/auth/facebook/callback"
+      //TODO: change when deployed
+      callbackURL: "https://efd8e699.ngrok.io/auth/facebook/callback",
+      profileFields: ['id', 'displayName', 'emails', 'picture.width(200).height(200)']
     },
     function (accessToken, refreshToken, profile, cb) {
-      console.log(profile);
-      // User.findOrCreate({ facebookId: profile.id }, function (err, user) {
         return cb(null, profile);
-      // });
     }
   )
 );
 
 app.use(passport.initialize());
-
-app.get('/auth/facebook',
-  passport.authenticate('facebook'));
-
-app.get('/auth/facebook/callback',
-  passport.authenticate('facebook', { session: false }),
-  function(req, res) {
-    // Successful authentication, redirect home.
-    //res.redirect('/');
-    res.send('auth was good');
-  });
-
-
-
-
-
 
 var db = require("./models");
 
@@ -60,10 +43,7 @@ app.engine("handlebars", exphbs({ defaultLayout: "main" }));
 app.set("view engine", "handlebars");
 
 
-require("./routes/htmlRoutes.js")(app);
-
-require("./routes/api-routes")(app);
-
+require("./routes/routes.js")(app);
 
 // Start our server so that it can begin listening to client requests.
 //if force is true it will drop whatever table first and re-create it afterwards

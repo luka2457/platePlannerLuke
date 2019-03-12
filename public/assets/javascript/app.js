@@ -1,10 +1,11 @@
 function apiKey() {
 
-    $.get("/getkey", function (key) {
+    $.get("/getkey", function (sentVariable) {
 
         let apiKeyIndex = 0;
-        var apiKey = key[apiKeyIndex];
-        var userId = 2;
+        var apiKey = sentVariable.key[apiKeyIndex];
+        var userId = sentVariable.userInfo.userId;
+        var userInfo = sentVariable.userInfo;
 
         // AJAX call for ingredients using the recipe id provided in the first AJAX call
         function ingredientsAPI(recipeId, trueOrFalse, apiKey, recipeResult, num) {
@@ -25,7 +26,7 @@ function apiKey() {
 
                     if (results.error == "limit") {
                         apiKeyIndex++;
-                        apiKey = key[apiKeyIndex];
+                        apiKey = sentVariable.key[apiKeyIndex];
                         if (apiKeyIndex >= 9) {
                             alert("The Food 2 Fork API request limit has been reached for this application. Please try again tomorrow when the limit has reset, sorry for the inconvience.")
                         } else {
@@ -44,6 +45,7 @@ function apiKey() {
                                 ingredientsToCart({
                                     Ingredients: element,
                                     RecipeTableId: recipeId,
+                                    UsersTableId: userId
                                 });
                             });
                         }
@@ -120,7 +122,7 @@ function apiKey() {
                     var results = JSON.parse(result);
                     if (results.error == "limit") {
                         apiKeyIndex++;
-                        apiKey = key[apiKeyIndex];
+                        apiKey = sentVariable.key[apiKeyIndex];
                         if (apiKeyIndex >= 9) {
                             alert("The Food 2 Fork API request limit has been reached for this application. Please try again tomorrow when the limit has reset, sorry for the inconvience.")
                         } else {
@@ -144,19 +146,15 @@ function apiKey() {
 
 
         //this is the function of when you favorite a recipe...inserts recipe to favs
-        $(document).on('click', 'button.favSave-btn', function favSaveBtnClicked () {
+        $(document).on('click', 'button.favSave-btn', function favSaveBtnClicked() {
             var RecipeDataName = $(this).data("title");
             var RecipeDataId = $(this).data("rid");
             var RecipeDataSource = $(this).data("source");
             var RecipeDataImage = $(this).data("img");
             insertRecipe(RecipeDataName, RecipeDataId, userId, RecipeDataSource, RecipeDataImage);
-            console.log("this is the recipe data id");
-            console.log(RecipeDataId);
-
 
             $(this).replaceWith("<p style='color: red'>Added to Favorites!</p><p style='color: red'>Ingredients added to shopping list</p>");
             ingredientsAPI(RecipeDataId, true, apiKey);
-            console.log('this is apikey at onclick save btn ' + apiKey);
         });
 
 
@@ -176,21 +174,18 @@ function apiKey() {
 
         // This function inserts a new recipe into our database 
         function insertRecipe(recipeDataName, recipe, userId, recipeSource, recipeImage) {
-            console.log("insertrecipe working");
+            console.log("insertRecipe working");
             var recipesArray = {
                 recipeName: recipeDataName,
                 recipeSource: recipeSource,
                 recipeImage: recipeImage,
                 id: recipe,
                 UsersTableId: userId
-
             };
-            console.log("recipe sent to recipeTable database");
             $.post("/api/recipes", recipesArray);
         }
 
         function ingredientsToCart(ingredientData) {
-            console.log("ingredient sent to cart database");
             $.post("/api/cart", ingredientData);
         }
 
@@ -219,6 +214,14 @@ function apiKey() {
                 }
             );
         }
+
+        function buildProfile(userName, userEmail, userPic) {
+            $("#profileName").html(`<h3>${userName}</h3>`);
+            $("#profileEmail").html(`<h3>${userEmail}</h3>`);
+            $("#profilePhoto").attr("src", userPic);
+        };
+        buildProfile(userInfo.userName, userInfo.userEmail, userInfo.userPic);
+
     });
 }
 
