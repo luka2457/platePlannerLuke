@@ -20,9 +20,6 @@ function apiKey() {
                 success: function (result) {
                     // retreival of recipe ingredients as array
                     var results = JSON.parse(result);
-                    console.log("results of ingredientsAPI");
-                    console.log(results);
-
 
                     if (results.error == "limit") {
                         apiKeyIndex++;

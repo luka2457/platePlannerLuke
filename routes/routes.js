@@ -96,7 +96,6 @@ module.exports = function (app) {
 
   // GET route for API key and userInfo
   app.get('/getkey', function (req, res) {
-    console.log(userInfo);
     let sentVariable = {key, userInfo};
     res.send(sentVariable);
   });
