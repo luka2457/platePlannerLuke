@@ -43,15 +43,12 @@ module.exports = function (app) {
   app.get('/login',
     passport.authenticate('facebook', {
       scope: ['email', 'public_profile'],
-      //TODO
-      //authType: 'reauthenticate' 
     })
   );
-  //login route
+  //login route for after a user logs out...makes them sign back in
   app.get('/reAuthLogin',
     passport.authenticate('facebook', {
       scope: ['email', 'public_profile'],
-      //TODO
       authType: 'reauthenticate'
     })
   );
