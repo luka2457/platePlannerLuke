@@ -11,7 +11,7 @@ require('dotenv').config({
 
 
 //variables
-let userInfo ={};
+let userInfo = {};
 
 // Routes
 // =============================================================
@@ -38,14 +38,22 @@ module.exports = function (app) {
   app.get("/terms", function (req, res) {
     res.sendFile(path.join(__dirname, "../public/term.html"));
   })
-  //privacy html
-  app.get("/privacy", function (req, res) {
-    res.sendFile(path.join(__dirname, "../public/privacy.html"));
-  })
 
   //login route
   app.get('/login',
-    passport.authenticate('facebook', { scope : ['email', 'public_profile'] })
+    passport.authenticate('facebook', {
+      scope: ['email', 'public_profile'],
+      //TODO
+      //authType: 'reauthenticate' 
+    })
+  );
+  //login route
+  app.get('/reAuthLogin',
+    passport.authenticate('facebook', {
+      scope: ['email', 'public_profile'],
+      //TODO
+      authType: 'reauthenticate'
+    })
   );
 
   //login callback route
@@ -53,7 +61,6 @@ module.exports = function (app) {
     passport.authenticate('facebook', { session: false }),
     function (req, res) {
       let userId = req.user.id;
-      console.log(req.user);
       let userName = req.user.displayName;
       let userEmail = req.user.emails[0].value;
       let userPic = req.user.photos[0].value;
@@ -64,30 +71,28 @@ module.exports = function (app) {
         userPic: userPic
       }
       // POST route new user
-      // app.post("/api/users", function (req, res) {
       console.log("user either created or found in api-routes");
-      //console.log(req.body)
       db.UsersTable.findOrCreate({
         where: {
           id: userInfo.userId,
+        },
+        defaults: {
           userName: userInfo.userName,
           userEmail: userInfo.userEmail,
           userPic: userInfo.userPic
-        },
-      }).error(function (err) { //error handling
+        }
+        //error handling
+      }).error(function (err) {
         console.log(err);
       })
-      //});
-      // Successful authentication, redirect home.
       res.redirect('/');
-      // res.send('auth was good');
-    });
+    }
+  );
 
   //logout route
   app.get('/logout', function (req, res) {
-    req.logout();
     userInfo.userId = undefined;
-    res.redirect('/');
+    res.redirect('/reAuthLogin');
   });
 
 
@@ -96,7 +101,7 @@ module.exports = function (app) {
 
   // GET route for API key and userInfo
   app.get('/getkey', function (req, res) {
-    let sentVariable = {key, userInfo};
+    let sentVariable = { key, userInfo };
     res.send(sentVariable);
   });
 

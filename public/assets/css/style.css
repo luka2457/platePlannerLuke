@@ -225,6 +225,14 @@ table {
 .show>.btn-outline-primary.dropdown-toggle:focus {
     box-shadow: 0 0 0 .2rem rgba(32, 70, 139, 0.5);
 }
+
+
+#logoutBtn {
+  color: #99cc99;
+  background-color: #243d72;
+  padding: 4px;
+  border-radius: 7px;
+}
  
   
   
