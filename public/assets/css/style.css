@@ -34,7 +34,6 @@ body {
     text-align: center;
     align-content: center;
     padding: 0 0 0 0;
-    margin: 0 0 0 85px;
     background-color: rgba(255, 255, 255, 0.4);
     border-radius: 10px;
   }
@@ -53,7 +52,9 @@ body {
   
   .pPic {
     padding: 0 0 0 0;
-    margin: 0 0 0 -12px;
+    margin: 0;
+    max-width: 100%;
+    height: auto;
   }
   
   #searchbar {
@@ -72,6 +73,8 @@ body {
     margin: 25px 0 0 0;
     padding: 0 0 0 0;
     background-image: url("../images/retina_wood.png");
+    bottom: 0;
+    width: 100%;
   }
   
   .jumbotron {
@@ -136,7 +139,7 @@ body {
     background-color: #b90d46; 
     color: #e0cbcb;
     border-radius: 7px;
-    margin: 5px 0 0 5px;
+    /* margin: 5px 0 0 5px; */
   }
 table {
   width: 64%;
@@ -233,6 +236,39 @@ table {
   padding: 4px;
   border-radius: 7px;
 }
+
+.navbar-nav .dropdown-menu {
+  position: absolute;
+  float: none;
+}
+
+p {
+  padding: 0 1%;
+}
  
+.carousel-item.active {
+  display: flex;
+  margin-bottom: 3%;
+}
+
+@media (max-width: 576px) {
+  .container {
+      max-width: 500px;
+  }
+  .form-inline {
+    flex-flow: inherit;
+  }
+}
   
+@media (max-width: 991px){
+  #searchbar {
+    margin: 0 auto;
+  }
+}
+
+@media (max-width: 767px){
+  .form-inline {
+    margin: 0 25%;
+  }
+}
   

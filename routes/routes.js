@@ -18,7 +18,7 @@ let userInfo = {};
 module.exports = function (app) {
 
   // Each of the below routes handles the sign in and HTML/handlebars page that the user is sent to 
-  // index route loads home.html
+  // index route loads home
   app.get("/", function (req, res) {
     if (userInfo.userId == undefined) {
       console.log("not logged in");
@@ -45,6 +45,7 @@ module.exports = function (app) {
       scope: ['email', 'public_profile'],
     })
   );
+
   //login route for after a user logs out...makes them sign back in
   app.get('/reAuthLogin',
     passport.authenticate('facebook', {
@@ -57,6 +58,7 @@ module.exports = function (app) {
   app.get('/auth/facebook/callback',
     passport.authenticate('facebook', { session: false }),
     function (req, res) {
+      console.log(req.user.photos);
       let userId = req.user.id;
       let userName = req.user.displayName;
       let userEmail = req.user.emails[0].value;
@@ -94,9 +96,11 @@ module.exports = function (app) {
 
 
 
+
+
   //API ROUTES BELOW
 
-  // GET route for API key and userInfo
+  // GET route for API key and userInfo and deliver to frontend
   app.get('/getkey', function (req, res) {
     let sentVariable = { key, userInfo };
     res.send(sentVariable);
@@ -192,7 +196,14 @@ module.exports = function (app) {
       res.json(db);
     });
   });
+  
+  //directs any routes not listed above to the home page
+  app.get('*', function (req, res) {
+    res.redirect('/');
+  });
 }
+
+
 
 
 //this function allows handlebars to display the database variables

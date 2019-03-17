@@ -40,14 +40,14 @@ $("document").ready(function () {
 
                             $(".carousel-inner").append(
                                 `<div class="carousel-item col-md-4 active">
-                                    <div class="card" style="width: 16rem; height: 25rem; background-color: rgba(255, 255, 255, 0.4);">
+                                    <div class="card" style="width: 16rem; height: 25rem; background-color: rgba(255, 255, 255, 0.4); margin: 0 auto;">
                                     <img class="card-img-top img-fluid" data-img= ${recipeResult.image_url} src= ${recipeResult.image_url} alt="Card image cap" style='min-height: 12rem; max-height: 12rem; max-width: 16rem; overflow: hidden;'>
                                     <div class="card-body" style="background-color: transparent;">
-                                        <h4 class="card-title" data-title=${recipeResult.title}>${recipeResult.title}</h4>
+                                        <h4 class="card-title" data-title='${recipeResult.title}'>${recipeResult.title}</h4>
                                         <a target='_blank' data-source=${recipeResult.source_url} href=${recipeResult.source_url} class='card-link mx-auto'>
                                              Recipe Link
                                          </a>
-                                         <button type='button' data-rid=${recipeResult.recipe_id} data-img=${recipeResult.image_url} data-title=${recipeResult.title} class='btn btn-primary btn-sm mx-auto mt-2 favSave-btn'  data-source=${recipeResult.source_url} style='display: block'>
+                                         <button type='button' data-rid=${recipeResult.recipe_id} data-img=${recipeResult.image_url} data-title='${recipeResult.title}' class='btn btn-primary btn-sm mx-auto mt-2 favSave-btn'  data-source=${recipeResult.source_url} style='display: block'>
                                              Save to Favorites
                                         </button> 
                                     </div>

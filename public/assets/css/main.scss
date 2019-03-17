@@ -23,11 +23,11 @@ body {
 nav{ 
     a .dropdown-item {
     color: $a-color;
-}
+    }
 
     a .dropdown-menu {
     color: $a-color;
-}
+    }
 }
 
 
@@ -38,8 +38,6 @@ a {
 a:hover {
     color: darkslategray;
 }
-
-
 
 .left {
     float: left;
@@ -86,14 +84,12 @@ a:hover {
     clear: both;
     padding: $paddefault;
     margin: $mardefault;
-
 }
 
 .footer {
     margin: 25px 0 0 0;
     padding: $paddefault;
     background-image: url('../images/retina_wood.png');
-    
 }
 
 .jumbotron { 

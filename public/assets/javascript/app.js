@@ -9,7 +9,6 @@ function apiKey() {
 
         // AJAX call for ingredients using the recipe id provided in the first AJAX call
         function ingredientsAPI(recipeId, trueOrFalse, apiKey, recipeResult, num) {
-            console.log("apiKey for ingredientsAPI " + apiKey);
             $.ajax({
                 url: 'https://www.food2fork.com/api/get',
                 type: 'GET',
@@ -72,7 +71,7 @@ function apiKey() {
                                         </a> 
                                         <h6>Ingredients:</h6>
                                         <ul id=${num}>${testHTML}</ul> 
-                                        <button type='button' data-rid=${recipeResult.recipe_id} data-img=${recipeResult.image_url} data-title=${recipeResult.title} class='btn btn-primary btn-sm mx-auto mt-2 favSave-btn'  data-source=${recipeResult.source_url} style='display: block'>
+                                        <button type='button' data-rid=${recipeResult.recipe_id} data-img=${recipeResult.image_url} data-title='${recipeResult.title}' class='btn btn-primary btn-sm mx-auto mt-2 favSave-btn'  data-source=${recipeResult.source_url} style='display: block'>
                                             Save to Favorites
                                         </button> 
                                     </div>
@@ -115,7 +114,6 @@ function apiKey() {
                     count: 5
                 },
                 success: function (result) {
-                    console.log("apiKey for searchbtnclicked" + apiKey);
                     var results = JSON.parse(result);
                     if (results.error == "limit") {
                         apiKeyIndex++;
