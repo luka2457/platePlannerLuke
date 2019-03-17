@@ -1,9 +1,9 @@
-
 {{!-- this is displaying all of the recipes for all users... --}}
 
-<li>
+<li style="padding-bottom: 1%;">
     <img src="{{recipeImage}}" alt="recipe-image" style='height: 8rem; width: 8rem; border-radius: 10px'>
-    <a target='_blank' href="{{recipeSource}}" > {{recipeName}} </a>
-    <button class="delete-recipe" data-id="{{this.id}}">DELETE</button>
+    <a target='_blank' href="{{recipeSource}}"> {{recipeName}} </a>
+    <button class="delete-recipe close" data-id="{{this.id}}" type="button" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
 </li>
-

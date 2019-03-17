@@ -139,25 +139,34 @@ body {
     background-color: #b90d46; 
     color: #e0cbcb;
     border-radius: 7px;
-    /* margin: 5px 0 0 5px; */
+    overflow: hidden;
   }
-table {
-  width: 64%;
-  padding: 0 0 0 0;
-  margin: 0 0 0 0;
-  align-content: center;
 
-}
+  .btn-link {
+    overflow: hidden;
+    white-space: inherit;
+  }
+
+  .btn-primary{
+    overflow: inherit;
+  }
+  
+  table {
+    width: 100%;
+    padding: 0 0 0 0;
+    margin: 0 0 0 0;
+    align-content: center;
+  }
   td {
     text-align: right;
-}
+  }
 
 /* Custom Bootstrap Button */
   .btn-primary {
     color: #212529;
     background-color: #999933;
     border-color: #436620;
-}
+  }
 
 .btn-primary:hover {
     color: #212529;
@@ -251,18 +260,39 @@ p {
   margin-bottom: 3%;
 }
 
-@media (max-width: 576px) {
-  .container {
-      max-width: 500px;
+button.close {
+  float: inherit;
+  color: rgb(255, 0, 0); 
+}
+
+#ulProfileRecipes, #ulShoppingList{
+  text-align: left;
+  padding-left: 30%;
+}
+
+.liShoppingCart{
+  padding:3% 0%;
+}
+
+
+@media (max-width: 1199px){
+  #ulProfileRecipes{
+    padding-left: 15%;
   }
-  .form-inline {
-    flex-flow: inherit;
+  #ulShoppingList{
+    padding-left: 25%;
   }
 }
-  
+
 @media (max-width: 991px){
   #searchbar {
     margin: 0 auto;
+  }
+  #ulProfileRecipes, #ulShoppingList{
+    padding-left: 10%;
+  }
+  #accordionExample {
+    padding: 10px 0px 10px 0;
   }
 }
 
@@ -270,5 +300,19 @@ p {
   .form-inline {
     margin: 0 25%;
   }
+  #ulProfileRecipes, #ulShoppingList{
+    padding-left: 5%;
+  }
 }
   
+@media (max-width: 576px) {
+  .container {
+      max-width: 500px;
+  }
+  .form-inline {
+    flex-flow: inherit;
+  }
+  .jumbotron{
+    padding: 13rem 0 0 0;
+  }
+}

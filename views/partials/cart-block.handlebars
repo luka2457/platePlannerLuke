@@ -1,5 +1,8 @@
-<li>
+<li class="liShoppingCart">
 	{{Ingredients}}
 
-	<button class="delete-ingredient" data-id="{{this.id}}">DELETE</button>
+	<button class="delete-ingredient close red" data-id="{{this.id}}" type="button" aria-label="Close">
+		<span aria-hidden="true">&times;</span>
+	</button>
+
 </li>

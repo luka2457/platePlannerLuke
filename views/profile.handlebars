@@ -48,7 +48,7 @@
               <div class="col-md-9">
                 <h1>Saved Recipes</h1>
                 <p>View your favorite recipes here! You can also edit or delete your saved list.</p>
-                <ul>
+                <ul id="ulProfileRecipes">
                   {{!-- this pulls from the database and puts the info into the recipe-block.handlebars file --}}
                   {{#each RecipeTable}} {{>recipe-block}}
                   {{/each}}

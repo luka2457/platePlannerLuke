@@ -49,7 +49,7 @@ function apiKey() {
 
                             let testHTML = "";
                             for (let i = 0; i < results.recipe.ingredients.length; i++) {
-                                testHTML += `<li>${results.recipe.ingredients[i]}</li>`;
+                                testHTML += `<li style="padding:1%;">${results.recipe.ingredients[i]}</li><br>`;
                             }
 
                             // console.log("recipe result:", recipeResult);
@@ -70,7 +70,7 @@ function apiKey() {
                                             Recipe Link
                                         </a> 
                                         <h6>Ingredients:</h6>
-                                        <ul id=${num}>${testHTML}</ul> 
+                                        <ul id=${num} style="padding: 0px;">${testHTML}</ul> 
                                         <button type='button' data-rid=${recipeResult.recipe_id} data-img=${recipeResult.image_url} data-title='${recipeResult.title}' class='btn btn-primary btn-sm mx-auto mt-2 favSave-btn'  data-source=${recipeResult.source_url} style='display: block'>
                                             Save to Favorites
                                         </button> 
