@@ -13,8 +13,8 @@ passport.use(
     {
       clientID: '2812611205629771',
       clientSecret: 'debd2a021c974b66ca2c5736dd15e77d',
-      //TODO: change when deployed
       callbackURL: "https://plateplanner.herokuapp.com/auth/facebook/callback",
+      //Start ngrok and use their provide url .../auth/facebook/callback when not deployed
       // callbackURL: "https://efd8e699.ngrok.io/auth/facebook/callback",
       profileFields: ['id', 'displayName', 'emails', 'picture.width(200).height(200)']
     },
